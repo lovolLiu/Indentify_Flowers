@@ -89,7 +89,7 @@
 
 			</div>
 		</div>
-        <div>
+        <div id="uploadArea">
             <div class="containter">
                 <div class="row r-pb upload">
 					<div class="fh5co-overlay" style="opacity: 0.7095;"></div>
@@ -102,7 +102,54 @@
                 </div>
             </div>
         </div>
+		<div id="resultArea" style="display:none" data-section="portfolio">
+			<div class="container">
+				<div class="row r-pb">
+					<div class="col-md-8 col-md-offset-2 text-center section-heading">
+						<h2 class="fh5co-section-title animate-box fadeInUp animated">Portfolio</h2>
+						<p class="fh5co-lead animate-box fadeInUp animated">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-4 col-xs-6 col-xxs-12 animate-box fadeInUp animated">
+						<div class="img-grid">
+							<img src="static/images/pic_1.jpg" alt="Free HTML5 template by FREEHTML5.co" class="img-responsive">
+							<a href="portfolio-single.html" class="transition">
+								<div>
+									<span class="fh5co-meta">15 images</span>
+									<h2 class="fh5co-title">Rob &amp; Jean Wedding</h2>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-6 col-xxs-12 animate-box fadeInUp animated">
+						<div class="img-grid">
+							<img src="static/images/pic_2.jpg" alt="Free HTML5 template by FREEHTML5.co" class="img-responsive">
+							<a href="portfolio-single.html" class="transition">
+								<div>
+									<span class="fh5co-meta">15 images</span>
+									<h2 class="fh5co-title">Rob &amp; Jean Wedding</h2>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-6 col-xxs-12 animate-box fadeInUp animated">
+						<div class="img-grid">
+							<img src="static/images/pic_3.jpg" alt="Free HTML5 template by FREEHTML5.co" class="img-responsive">
+							<a href="portfolio-single.html" class="transition">
+								<div>
+									<span class="fh5co-meta">15 images</span>
+									<h2 class="fh5co-title">Rob &amp; Jean Wedding</h2>
+								</div>
+							</a>
+						</div>
+					</div>
 
+
+
+				</div>
+			</div>
+		</div>
 		<div id="fh5co-footer">
 			<div class="container">
 				<div class="row">
@@ -159,6 +206,14 @@
     <!-- Dropify -->
     <script src="static/js/dropify.js"></script>
     <script>
+        function showResult(){
+            $('#uploadArea').attr('style','display:none;')
+            $('#resultArea').attr('style','')
+        }
+        function showUpload(){
+            $('#uploadArea').attr('style','')
+            $('#resultArea').attr('style','display:none;')
+        }
         $(document).ready(function(){
             var drEvent = $('.dropify').dropify();
             drEvent.on('dropify.fileReady', function(event, element){
@@ -171,6 +226,13 @@
                     contentType:false,  //必须false才会自动加上正确的Content-Type
                     processData:false //必须false才会避开jQuery对 formdata 的默认处理
                 }).done(function(result){
+                    if(result.status == "ok"){
+                        //do something to show result
+                        showResult()
+                    }
+                    if(result.status == "fail"){
+                        alert("something is wrong")
+                    }
                     console.log(result);
                 }).fail(function(err){
                     console.log(err);
