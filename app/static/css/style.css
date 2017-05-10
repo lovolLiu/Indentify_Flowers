@@ -11,10 +11,10 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 300;
   line-height: 1.5;
-  color: #7a7e89;
+  color: #f5f5f5;;
   background: #f7f7f7;
 }
 body.fh5co-overflow {
@@ -610,7 +610,7 @@ p {
   }
 }
 #fh5co-testimony .flexslider .slides li blockquote p {
-  font-size: 40px;
+  font-size: 20px;
   line-height: 1.5;
   font-family: "Roboto Slab", sans-serif;
   color: white !important;
