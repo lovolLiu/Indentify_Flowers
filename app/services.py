@@ -9,15 +9,16 @@ import base64
 from slim.nets import inception_v4
 from slim.preprocessing import inception_preprocessing
 from slim.datasets import imagenet
+from flower_manager import FlowerManager
 
+flower_manager = FlowerManager()
 
 def upload(dir_path, uploaded_file):
     try:
         filename = uploaded_file.filename
         path = dir_path + "/" + filename
         uploaded_file.save(path)
-        result = {}
-        checkpoints_dir = '/private/tmp/checkpoints'
+        checkpoints_dir = '/private/tmp/checkpoint'
 
         slim = tf.contrib.slim
 
@@ -65,7 +66,6 @@ def upload(dir_path, uploaded_file):
             init_fn = slim.assign_from_checkpoint_fn(
                 os.path.join(checkpoints_dir, 'model.ckpt-500'),
                 slim.get_model_variables('InceptionV4'))
-
             with tf.Session() as sess:
                 # Load weights
                 init_fn(sess)
@@ -81,6 +81,7 @@ def upload(dir_path, uploaded_file):
                                                     key=lambda x: x[1])]
 
             names = {0: "daisy", 1: "dandelion", 2: "roses", 3: "sunflowers", 4: "tulips"}
+            result = {}
             for i in range(5):
                 index = sorted_inds[i]
                 # Now we print the top-5 predictions that the network gives us with
@@ -88,10 +89,14 @@ def upload(dir_path, uploaded_file):
                 # class names is shifted by 1 -- this is because some networks
                 # were trained on 1000 classes and others on 1001. VGG-16 was trained
                 # on 1000 classes.
-                result[names[index]] = str("%.4f"%probabilities[index])
+                result[names[index]] = str("%.4f" % probabilities[index])
         result["status"] = "ok"
         return result
     except Exception, e:
         print e
-        result["status"] = "fail"
-        return result
+        return {"status":"fail"}
+
+
+def get_detail(flower_name):
+    flower_info = flower_manager.get_flower_info(flower_name)
+    return flower_info.dump()
