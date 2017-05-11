@@ -1,17 +1,12 @@
 # -*- coding:utf-8 -*-
 import os
-from matplotlib import pyplot as plt
-import numpy as np
-import os
 import tensorflow as tf
-import urllib2
-import base64
 from slim.nets import inception_v4
 from slim.preprocessing import inception_preprocessing
-from slim.datasets import imagenet
 from flower_manager import FlowerManager
 
 flower_manager = FlowerManager()
+
 
 def upload(dir_path, uploaded_file):
     try:
@@ -80,8 +75,10 @@ def upload(dir_path, uploaded_file):
                 sorted_inds = [i[0] for i in sorted(enumerate(-probabilities),
                                                     key=lambda x: x[1])]
 
-            names = {0: "daisy", 1: "dandelion", 2: "roses", 3: "sunflowers", 4: "tulips"}
+            names = {0: u'雏菊', 1: u'蒲公英', 2: u'玫瑰', 3: u'向日葵', 4: u'郁金香'}
             result = {}
+            flower_names = []
+            flower_probabilities = []
             for i in range(5):
                 index = sorted_inds[i]
                 # Now we print the top-5 predictions that the network gives us with
@@ -89,14 +86,18 @@ def upload(dir_path, uploaded_file):
                 # class names is shifted by 1 -- this is because some networks
                 # were trained on 1000 classes and others on 1001. VGG-16 was trained
                 # on 1000 classes.
-                result[names[index]] = str("%.4f" % probabilities[index])
+                flower_names.append(names[index])
+                flower_probabilities.append(str("%.4f" % probabilities[index]))
         result["status"] = "ok"
+        result["user_upload"] = "static/data/" + filename
+        result["names"] = flower_names
+        result["probabilities"] = flower_probabilities
         return result
     except Exception, e:
         print e
-        return {"status":"fail"}
+        return {"status": "fail"}
 
 
-def get_detail(flower_name):
+def detail(flower_name):
     flower_info = flower_manager.get_flower_info(flower_name)
     return flower_info.dump()

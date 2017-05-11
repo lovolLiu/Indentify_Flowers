@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, request
 from app import app
-from services import upload, get_detail
+from services import upload, detail
 from flask import jsonify
 import os
 import json
@@ -28,5 +28,6 @@ def upload_file():
 def get_detail():
     data = json.loads(request.data)
     flower_name = data['flower_name']
-    result = get_detail(flower_name)
+    result = detail(flower_name)
+    result["_id"] = str(result["_id"])
     return jsonify(result)

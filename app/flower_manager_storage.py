@@ -8,7 +8,7 @@ class FlowerManagerStorage(object):
         self._mongodb_collection = mongodb_collection
 
     def get_flower_intro_by_name(self, flower_name):
-        flower_info_store = self._mongodb_collection.find_one({"name": flower_name})
+        flower_info_store = self._mongodb_collection.find_one({"flower_name": flower_name})
         if flower_info_store is None:
             raise NameNotFoundException
         flower_info = FlowerInfo()

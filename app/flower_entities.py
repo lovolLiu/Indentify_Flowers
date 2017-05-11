@@ -49,7 +49,7 @@ class FlowerInfo(object):
     def dump(self):
         dumped_dict = {
             "_id": self.flower_id,
-            "flower_name" : self.flower_name,
+            "flower_name": self.flower_name,
             "flower_intro": self.flower_intro,
             "flower_lan": self.flower_lan,
             "flower_medical": self.flower_medical,
