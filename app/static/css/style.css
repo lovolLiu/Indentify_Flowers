@@ -673,6 +673,8 @@ p {
 }
 #fh5co-footer p {
   margin-bottom: 10px;
+  color: #d87894;
+  font-size: small;
 }
 #fh5co-footer .fh5co-footer-widget {
   margin-bottom: 30px;
@@ -704,6 +706,7 @@ p {
 }
 .fh5co-social li a i {
   font-size: 20px;
+  color: #d87894;
 }
 .fh5co-social li a:hover {
   text-decoration: none !important;

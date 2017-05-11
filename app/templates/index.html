@@ -202,7 +202,7 @@
         <div class="row r-pb upload">
             <div class="fh5co-overlay" style="opacity: 0.5;"></div>
             <div class="col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2 text-center">
-                <h2 class="fh5co-section-title animate-box fadeInUp animated" style="padding:2.5em;color:white;">Upload Photo</h2>
+                <h2 class="fh5co-section-title animate-box fadeInUp animated" style="padding:2.5em;color:#d87894;">请上传您要识别的图片</h2>
                 <form id="upload_form">
                     <input id="uploaded_file" name="file" type="file" class="dropify" data-height="500" />
                 </form>
@@ -221,18 +221,16 @@
     </div>
     <div id="resultArea" style="display:none;" data-section="portfolio">
         <div class="container">
-            <div class="row r-pb">
-                <div class="col-md-8 col-md-offset-2 text-center section-heading">
-                    <p class="fh5co-lead animate-box fadeInUp animated">Result</p>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center section-heading" style="margin-top: 30px;">
+                    <p class="fh5co-lead animate-box fadeInUp animated" style="color:#d87894;">- 您上传的图片为 -</p>
                 </div>
             </div>
             <div align="center">
                 <img id="user_uploaded_img" src=""/>
             </div>
-            <div class="row r-pb">
-                <div class="col-md-8 col-md-offset-2 text-center section-heading">
-                    <p class="fh5co-lead animate-box fadeInUp animated"></p>
-                </div>
+            <div class="col-md-8 col-md-offset-2 text-center section-heading" style="margin-top: 30px;">
+                <p class="fh5co-lead animate-box fadeInUp animated" style="color:#d87894;">- 识别出的图片为 -</p>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-6 col-xxs-12 animate-box fadeInUp animated">
@@ -312,11 +310,11 @@
     <div id="detailArea" class="row detail-area">
         <div class="fh5co-overlay"></div>
         <!-- Start Slider Testimonial -->
-        <h2 class="fh5co-uppercase-heading-sm text-center animate-box">详情</h2>
+        <h2 id="detail-header" class="fh5co-uppercase-heading-sm text-center animate-box"></h2>
         <div class="fh5co-spacer fh5co-spacer-xs"></div>
         <div class="owl-carousel-fullwidth">
             <div class="item">
-                <p class="quote flower-intro">
+                <p class="quote flower-medical">
                 </p>
             </div>
             <div class="item">
@@ -324,12 +322,12 @@
                 </p>
             </div>
             <div class="item">
-                <p class="quote flower-medical">
+                <p class="quote flower-intro">
                 </p>
             </div>
         </div>
         <!-- End Slider Testimonial -->
-        <a class="btn btn-primary col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">重新上传图片</a>
+        <a class="btn btn-primary col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2" onclick="showUpload()">重新上传图片</a>
     </div>
     <!-- END row -->
 </div>
@@ -339,8 +337,8 @@
         <div class="row">
             <div class="col-md-6 col-sm-6 animate-box">
                 <div class="fh5co-footer-widget">
-                    <p>&copy; Fotografy Free HTML5 Template. All Rights Reserved.</p>
-                    <p>More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                    <p>Created by Xintong Liu</p>
+                    <p>Beijing University of Posts and Telecommunications</p>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 animate-box">
@@ -400,6 +398,8 @@
         function showUpload(){
             $('#uploadArea').attr('style','')
             $('#resultArea').attr('style','display:none;')
+            $('#detailArea').css('visibility', 'hidden')
+            window.location.href = "#uploadArea"
         }
         $('.flower_detail').click(function(){
             flower_name = $(this).find('div').find('span').html()
@@ -412,10 +412,12 @@
                 contentType: 'application/json; charset=UTF-8',
                 dataType: 'json',
                 success: function(data) {
+                    $('#detail-header').html("详情-" + data.flower_name)
                     $('.flower-intro').html("<cite class='author'>简介</cite>" + data.flower_intro)
                     $('.flower-lan').html("<cite class='author'>花语</cite>" + data.flower_lan)
                     $('.flower-medical').html("<cite class='author'>药用价值</cite>" + data.flower_medical)
                     $('.owl-dot').click()
+                    window.location.href = "#detailArea"
                     console.log(data)
                 },
                 error: function(xhr, type) {
